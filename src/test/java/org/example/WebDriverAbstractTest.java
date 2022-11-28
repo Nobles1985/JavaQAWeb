@@ -12,7 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 
-public class WebDriverAbstractTest {
+public abstract class WebDriverAbstractTest {
 
     private static WebDriver driver;
     private static Actions actions;
@@ -23,9 +23,9 @@ public class WebDriverAbstractTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
         options.addArguments("start-maximized");
-        WebDriver driver = new ChromeDriver(options);
-        Actions actions = new Actions(driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver = new ChromeDriver(options);
+        actions = new Actions(driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @BeforeEach
@@ -35,13 +35,9 @@ public class WebDriverAbstractTest {
     }
 
     @AfterAll
-    static void end(){
-        driver.quit();
-    }
+    static void end() { driver.quit(); }
 
-    public static WebDriver getDriver(){
-        return driver;
-    }
+    public static WebDriver getDriver() { return driver; }
 
     public static Actions getActions() { return actions; }
 }

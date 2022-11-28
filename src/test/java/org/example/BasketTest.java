@@ -1,5 +1,6 @@
 package org.example;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -19,7 +20,6 @@ public class BasketTest extends WebDriverAbstractTest{
         laptop.click();
         WebElement monitorSize = getDriver().findElement(By.xpath("//a[contains(text(),'17 дюймов')]"));
         monitorSize.click();
-        //Assertions.assertDoesNotThrow(() -> By.xpath("//h1[contains(text(),'Ноутбуки 17 дюймов')]"));
         WebElement buttonBuy = getDriver().findElement(By.xpath("//div[@class='catalog-products view-simple']//div[1]//div[4]//button[2]"));
         buttonBuy.click();
         WebElement buttonBasket = getDriver().findElement(By.xpath("//span[contains(text(),'В корзину')]"));
@@ -27,8 +27,10 @@ public class BasketTest extends WebDriverAbstractTest{
         WebElement extraOptions = getDriver().findElement(By.xpath("//div[@class='additional-services__checkbox-wrapper']//div[@class='additional-services__service-title'][contains(text(),'Установка лицензионной ОС Windows (лицензия Window')]"));
         extraOptions.click();
         WebElement buttonDelete = getDriver().findElement(By.xpath("//button[@class='menu-control-button remove-button']"));
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(buttonDelete));
-        buttonDelete.click();
+        Assertions.assertTimeout(Duration.ofSeconds(3), () -> {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(ExpectedConditions.elementToBeClickable(buttonDelete));
+            buttonDelete.click();
+        }, "Время ожидания истекло");
         WebElement buttonReturn = getDriver().findElement(By.xpath("//a[@class='empty-message-button empty-message-button_return']"));
         buttonReturn.click();
     }
