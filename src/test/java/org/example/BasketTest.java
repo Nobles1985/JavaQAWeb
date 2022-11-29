@@ -22,6 +22,7 @@ public class BasketTest extends WebDriverAbstractTest{
         monitorSize.click();
         WebElement buttonBuy = getDriver().findElement(By.xpath("//div[@class='catalog-products view-simple']//div[1]//div[4]//button[2]"));
         buttonBuy.click();
+        Assertions.assertEquals("1", getDriver().findElement(By.xpath("//span[@class='cart-link__badge']")).getText(), "Ошибка счетчика товаров!");
         WebElement buttonBasket = getDriver().findElement(By.xpath("//span[contains(text(),'В корзину')]"));
         buttonBasket.click();
         WebElement extraOptions = getDriver().findElement(By.xpath("//div[@class='additional-services__checkbox-wrapper']//div[@class='additional-services__service-title'][contains(text(),'Установка лицензионной ОС Windows (лицензия Window')]"));
@@ -30,7 +31,7 @@ public class BasketTest extends WebDriverAbstractTest{
         Assertions.assertTimeout(Duration.ofSeconds(3), () -> {
             new WebDriverWait(getDriver(), Duration.ofSeconds(3)).until(ExpectedConditions.elementToBeClickable(buttonDelete));
             buttonDelete.click();
-        }, "Время ожидания истекло");
+        }, "Не удалось удалить товар из корзины!");
         WebElement buttonReturn = getDriver().findElement(By.xpath("//a[@class='empty-message-button empty-message-button_return']"));
         buttonReturn.click();
     }
