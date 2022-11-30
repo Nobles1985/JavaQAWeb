@@ -5,7 +5,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -32,10 +34,17 @@ public abstract class WebDriverAbstractTest {
     void goTo(){
         Assertions.assertDoesNotThrow(() -> driver.navigate().to("https://www.dns-shop.ru/"),
                 "Страница не доступна");
+        WebElement chooseCity = getDriver().findElement(By.xpath("//div[@class='city-select__label']"));
+        chooseCity.click();
+        WebElement cityName = getDriver().findElement(By.xpath("//div[@id='select-city-modal']//span[2]"));
+        cityName.click();
+        actions.pause(4000).build().perform();
+        Assertions.assertEquals("Санкт-Петербург", getDriver().findElement(By.xpath("//span[@class='city-select__text']"))
+                .getText(), "Неверный город!");
     }
 
-    @AfterAll
-    static void end() { driver.quit(); }
+    //@AfterAll
+    //static void end() { driver.quit(); }
 
     public static WebDriver getDriver() { return driver; }
 

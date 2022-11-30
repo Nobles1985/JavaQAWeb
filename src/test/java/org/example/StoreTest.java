@@ -14,12 +14,6 @@ public class StoreTest extends WebDriverAbstractTest {
     @Test
     void storeTest() {
         getDriver().get("https://www.dns-shop.ru/");
-        WebElement chooseCity = getDriver().findElement(By.xpath("//div[@class='city-select__label']"));
-        chooseCity.click();
-        WebElement cityName = getDriver().findElement(By.xpath("//div[@id='select-city-modal']//span[2]"));
-        cityName.click();
-        Assertions.assertEquals("Санкт-Петербург", getDriver().findElement(By.xpath("//span[@class='city-select__text']"))
-                .getText(), "Неверный город!");
         WebElement storeMenu = getDriver().findElement(By.xpath("//a[contains(text(),'Магазины')]"));
         new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(storeMenu));
         storeMenu.click();

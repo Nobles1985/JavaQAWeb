@@ -8,56 +8,50 @@ import org.openqa.selenium.WebElement;
 public class FavoritesTest extends WebDriverAbstractTest{
 
     @Test
-    void favorTest() throws InterruptedException {
+    void favorTest() {
         getDriver().get("https://www.dns-shop.ru/");
 
         //Блок авторизации
-        WebElement menu = getDriver().findElement(By.xpath("//div[@class='user-menu']"));
+        WebElement menu = getDriver().findElement(By.xpath("//div[@class='header-bottom__user-menu']"));
         getActions().moveToElement(menu).build().perform();
-        WebElement buttonComeIn = getDriver().findElement(By.xpath("(//button[@class='base-ui-button-v2_medium base-ui-button-v2_brand base-ui-button-v2_ico-none base-ui-button-v2'])[1]"));
+        WebElement buttonComeIn = getDriver().findElement(By.xpath("//button[@class='base-ui-button-v2_medium base-ui-button-v2_brand base-ui-button-v2_ico-none base-ui-button-v2']"));
         buttonComeIn.click();
         WebElement loginAndPassword = getDriver().findElement(By.xpath("//div[@class='block-other-login-methods__password-caption']"));
         loginAndPassword.click();
-        WebElement login = getDriver().findElement(By.xpath("//input[@type='text']"));
+        WebElement login = getDriver().findElement(By.xpath("//input[@autocomplete='username']"));
         login.sendKeys("khj73325@cdfaq.com");
         WebElement password = getDriver().findElement(By.xpath("//input[@type='password']"));
         password.sendKeys("Test2022");
-        WebElement buttonLogin = getDriver().findElement(By.xpath("(//button[@class='base-ui-button-v2_big base-ui-button-v2_brand base-ui-button-v2_ico-none base-ui-button-v2'])[1]"));
-        buttonLogin.click();
-        Thread.sleep(7000);
-        Assertions.assertTrue(getDriver().findElement(By.xpath("//*[name()='img' and contains(@class,'user-profi')]")).isDisplayed());
+        WebElement buttonLogin = getDriver().findElement(By.cssSelector(".base-ui-button-v2_big.base-ui-button-v2_brand.base-ui-button-v2_ico-none.base-ui-button-v2"));
+        getActions().click(buttonLogin).pause(7000).build().perform();
+        Assertions.assertTrue(getDriver().findElement(By.className("user-profile__avatar")).isDisplayed());
 
         //Блок добавления в избранное
         WebElement categoryList = getDriver().findElement(By.xpath("//a[contains(text(),'ПК, ноутбуки, периферия')]"));
         getActions().moveToElement(categoryList).build().perform();
-        WebElement laptop = getDriver().findElement(By.xpath("//a[@class='ui-link menu-desktop__second-level'][contains(text(),'Ноутбуки')]"));
+        WebElement laptop = getDriver().findElement(By.xpath("//span[contains(text(),'Ноутбуки')]"));
         laptop.click();
         WebElement categoryLaptop = getDriver().findElement(By.xpath("//a[contains(text(),'Игровые')]"));
-        categoryLaptop.click();
-        Thread.sleep(2000);
+        getActions().click(categoryLaptop).pause(2000).scrollByAmount(0, 700).build().perform();
         WebElement buttonAddFavorite1 = getDriver().findElement(By.xpath("(//button[@class='button-ui button-ui_white button-ui_icon wishlist-btn'])[1]"));
         buttonAddFavorite1.click();
         WebElement buttonAddList = getDriver().findElement(By.xpath("//a[contains(text(),'+ Общий список')]"));
-        buttonAddList.click();
-        Thread.sleep(1000);
-        Assertions.assertEquals("1", getDriver().findElement(By.xpath("//span[@class='wishlist-link__badge']")).getText());
+        getActions().click(buttonAddList).pause(1000).build().perform();
+        Assertions.assertEquals("1", getDriver().findElement(By.cssSelector(".wishlist-link-counter__badge")).getText());
         WebElement buttonAddFavorite2 = getDriver().findElement(By.xpath("(//button[@class='button-ui button-ui_white button-ui_icon wishlist-btn'])[1]"));
         buttonAddFavorite2.click();
         WebElement buttonAddList2 = getDriver().findElement(By.xpath("//a[contains(text(),'+ Общий список')]"));
-        buttonAddList2.click();
-        Thread.sleep(1000);
-        Assertions.assertEquals("2", getDriver().findElement(By.xpath("//span[@class='wishlist-link__badge']")).getText());
-        WebElement favoriteList = getDriver().findElement(By.xpath("//a[@class='ui-link wishlist-link']"));
-        favoriteList.click();
-        Thread.sleep(2000);
-        WebElement chooseAll = getDriver().findElement(By.xpath("(//label[@class='ui-checkbox'])[1]"));
+        getActions().click(buttonAddList2).pause(1000).build().perform();
+        Assertions.assertEquals("2", getDriver().findElement(By.cssSelector(".wishlist-link-counter__badge")).getText());
+        WebElement favoriteList = getDriver().findElement(By.cssSelector(".wishlist-link-counter__lbl"));
+        getActions().click(favoriteList).pause(2000).build().perform();
+        WebElement chooseAll = getDriver().findElement(By.xpath("//span[contains(text(),'Выбрать все')]"));
         chooseAll.click();
         WebElement buttonBasket = getDriver().findElement(By.xpath("//button[@class='button-ui button-ui_white profile-wishlist-management__controls_delete']"));
         buttonBasket.click();
         WebElement buttonDelete = getDriver().findElement(By.xpath("//button[contains(text(),'Удалить')]"));
-        buttonDelete.click();
-        Thread.sleep(1000);
-        Assertions.assertEquals("2", getDriver().findElement(By.xpath("//span[@class='wishlist-link__badge']")).getText());
+        getActions().click(buttonDelete).pause(1000).build().perform();
+        Assertions.assertEquals("2", getDriver().findElement(By.cssSelector(".wishlist-link-counter__badge")).getText());
         Assertions.assertEquals("0 товаров на сумму: 0 ₽", getDriver().findElement(By.cssSelector(".profile-wishlist__sum")).getText());
         getDriver().navigate().refresh();
         Assertions.assertTrue(getDriver().findElement(By.cssSelector(".profile-wishlist__empty-image")).isDisplayed(), "Вкладка избранное не пуста!");
