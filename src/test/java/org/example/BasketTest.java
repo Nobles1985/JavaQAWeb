@@ -4,10 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class BasketTest extends WebDriverAbstractTest{
 
@@ -28,10 +24,8 @@ public class BasketTest extends WebDriverAbstractTest{
         WebElement extraOptions = getDriver().findElement(By.xpath("//div[@class='additional-services__checkbox-wrapper']//span[@class='base-ui-checkbox__icon base-ui-checkbox__icon base-ui-checkbox__icon-hover']"));
         extraOptions.click();
         WebElement buttonDelete = getDriver().findElement(By.xpath("//p[@class='remove-button__title']"));
-        Assertions.assertTimeout(Duration.ofSeconds(5), () -> {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(ExpectedConditions.elementToBeClickable(buttonDelete));
-            buttonDelete.click();
-        }, "Не удалось удалить товар из корзины!");
+        getActions().pause(1000).click(buttonDelete).build().perform();
+        Assertions.assertTrue(getDriver().findElement(By.cssSelector(".empty-message")).isDisplayed(), "Корзина не пустая!");
         WebElement buttonReturn = getDriver().findElement(By.xpath("//a[@class='empty-message-button empty-message-button_return']"));
         buttonReturn.click();
     }

@@ -36,15 +36,15 @@ public abstract class WebDriverAbstractTest {
                 "Страница не доступна");
         WebElement chooseCity = getDriver().findElement(By.xpath("//div[@class='city-select__label']"));
         chooseCity.click();
-        WebElement cityName = getDriver().findElement(By.xpath("//div[@id='select-city-modal']//span[2]"));
+        WebElement cityName = getDriver().findElement(By.xpath("//div[@id='modals']//span[2]"));
         cityName.click();
         actions.pause(4000).build().perform();
         Assertions.assertEquals("Санкт-Петербург", getDriver().findElement(By.xpath("//span[@class='city-select__text']"))
                 .getText(), "Неверный город!");
     }
 
-    //@AfterAll
-    //static void end() { driver.quit(); }
+    @AfterAll
+    static void end() { driver.quit(); }
 
     public static WebDriver getDriver() { return driver; }
 

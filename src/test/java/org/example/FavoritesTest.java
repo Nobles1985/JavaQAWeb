@@ -32,9 +32,9 @@ public class FavoritesTest extends WebDriverAbstractTest{
         WebElement laptop = getDriver().findElement(By.xpath("//span[contains(text(),'Ноутбуки')]"));
         laptop.click();
         WebElement categoryLaptop = getDriver().findElement(By.xpath("//a[contains(text(),'Игровые')]"));
-        getActions().click(categoryLaptop).pause(2000).scrollByAmount(0, 700).build().perform();
+        getActions().click(categoryLaptop).pause(1000).scrollByAmount(0, 300).build().perform();
         WebElement buttonAddFavorite1 = getDriver().findElement(By.xpath("(//button[@class='button-ui button-ui_white button-ui_icon wishlist-btn'])[1]"));
-        buttonAddFavorite1.click();
+        getActions().click(buttonAddFavorite1).build().perform();
         WebElement buttonAddList = getDriver().findElement(By.xpath("//a[contains(text(),'+ Общий список')]"));
         getActions().click(buttonAddList).pause(1000).build().perform();
         Assertions.assertEquals("1", getDriver().findElement(By.cssSelector(".wishlist-link-counter__badge")).getText());
