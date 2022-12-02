@@ -26,17 +26,12 @@ public class BasketPage extends AbstractPage{
         return this;
     }
 
-    public void clickButtonDelete(){
-        Actions actions = new Actions(getDriver());
-        actions.pause(1000).click(buttonDelete).build().perform();
-    }
+    public void clickButtonDelete() { getActions().pause(1000).click(buttonDelete).build().perform(); }
 
     public BasketPage clickButtonReturn(){
         buttonReturn.click();
         return this;
     }
 
-    public WebElement getEmptyBasketMessage() {
-        return emptyBasketMessage;
-    }
+    public WebElement getEmptyBasketMessage() { return emptyBasketMessage; }
 }

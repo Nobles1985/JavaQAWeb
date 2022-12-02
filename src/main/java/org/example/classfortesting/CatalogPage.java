@@ -33,12 +33,16 @@ public class CatalogPage extends AbstractPage{
 
     public CatalogPage(WebDriver driver) { super(driver, new Actions(driver)); }
 
+    public void scrollPage(){
+        getActions().scrollByAmount(0, 450).build().perform();
+    }
+
     public void clickMonitorSize() {
-        getActions().click(monitorSize).pause(1000).scrollByAmount(0, 500).build().perform();
+        getActions().click(monitorSize).pause(1000).build().perform();
     }
 
     public void clickGamingLaptop() {
-        getActions().click(gamingLaptop).pause(1000).scrollByAmount(0, 400).build().perform();
+        getActions().click(gamingLaptop).pause(1000).build().perform();
     }
 
     public void clickButtonBuy() { getActions().click(buttonBuy).pause(2000).build().perform(); }
