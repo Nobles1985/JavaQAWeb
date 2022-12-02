@@ -2,9 +2,7 @@ package org.example;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -28,19 +26,9 @@ public abstract class WebDriverAbstractTest {
 
     @BeforeEach
     void goTo(){
-        Assertions.assertDoesNotThrow(() -> driver.navigate().to("https://www.dns-shop.ru/"),
+        Assertions.assertDoesNotThrow(() -> driver.navigate().to("https://spb.dns-shop.ru/"),
                 "Страница не доступна");
-        WebElement chooseCity = getDriver().findElement(By.xpath("//div[@class='city-select__label']"));
-        chooseCity.click();
-        WebElement cityName = getDriver().findElement(By.xpath("//a[contains(text(),'Санкт-Петербург')]"));
-        cityName.click();
-        actions.pause(4000).build().perform();
-        Assertions.assertEquals("Санкт-Петербург", getDriver().findElement(By.xpath("//span[@class='city-select__text']"))
-                .getText(), "Неверный город!");
     }
-
-    @AfterEach
-    void closed() { driver.close(); }
 
     @AfterAll
     static void end() { driver.quit(); }
