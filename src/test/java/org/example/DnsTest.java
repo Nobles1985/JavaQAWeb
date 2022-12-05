@@ -1,12 +1,19 @@
 package org.example;
 
+import io.qameta.allure.*;
 import org.example.classfortesting.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@Story("Пользовательская история.")
 public class DnsTest extends WebDriverAbstractTest {
 
     @Test
+    @DisplayName("Корзина.")
+    @Description("Тестирование добавления определенного товара в корзину и его удаление.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.BLOCKER)
     void basketTest() {
 
         MainPage mainPage = new MainPage(getDriver());
@@ -26,6 +33,10 @@ public class DnsTest extends WebDriverAbstractTest {
     }
 
     @Test
+    @DisplayName("Доставка.")
+    @Description("Тестирование страницы с информацией о видах доставки.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.NORMAL)
     void deliveryTest(){
 
         MainPage mainPage = new MainPage(getDriver());
@@ -43,6 +54,10 @@ public class DnsTest extends WebDriverAbstractTest {
     }
 
     @Test
+    @DisplayName("Избранное.")
+    @Description("Тестирование добавления определенных товаров в избранное и их удаление.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.CRITICAL)
     void favoritesTest() {
 
         //Блок авторизации
@@ -79,6 +94,10 @@ public class DnsTest extends WebDriverAbstractTest {
     }
 
     @Test
+    @DisplayName("Акции.")
+    @Description("Тестирование сортировки промоакций по их типу.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.NORMAL)
     void promotionsTest(){
 
         MainPage mainPage = new MainPage(getDriver());
@@ -95,6 +114,10 @@ public class DnsTest extends WebDriverAbstractTest {
     }
 
     @Test
+    @DisplayName("Инфослайдер.")
+    @Description("Тестирование сортировки статей в выборке по типам представленной информации.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.MINOR)
     void sliderTest(){
 
         MainPage mainPage = new MainPage(getDriver());
@@ -109,6 +132,10 @@ public class DnsTest extends WebDriverAbstractTest {
     }
 
     @Test
+    @DisplayName("Поиск магазина.")
+    @Description("Тестирование пиоска магазина по части названия станции метро.")
+    @Link("https://spb.dns-shop.ru")
+    @Severity(SeverityLevel.MINOR)
     void storeTest() {
 
         MainPage mainPage = new MainPage(getDriver());
