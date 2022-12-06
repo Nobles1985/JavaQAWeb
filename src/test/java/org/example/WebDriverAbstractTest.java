@@ -5,22 +5,26 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class WebDriverAbstractTest {
+
     private static WebDriver driver;
-    private static Actions actions;
 
     @BeforeAll
     static void init(){
+
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
+       // options.addArguments("--headless");
         options.addArguments("start-maximized");
+        options.setPageLoadTimeout(Duration.ofSeconds(15));
         driver = new ChromeDriver(options);
-        actions = new Actions(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
@@ -33,7 +37,17 @@ public abstract class WebDriverAbstractTest {
     @AfterAll
     static void end() { driver.quit(); }
 
-    public static WebDriver getDriver() { return driver; }
+    @AfterEach
+    public void checkBrowserLog() {
+        List<LogEntry> allLogRows = getDriver().manage().logs().get(LogType.BROWSER).getAll();
+        if(!allLogRows.isEmpty()){
+            if (allLogRows.size() > 0) {
+                allLogRows.forEach(logEntry -> {
+                    System.out.println(logEntry.getMessage());
+                });
+            }
+        }
+    }
 
-    public static Actions getActions() { return actions; }
+    public static WebDriver getDriver() { return driver; }
 }
